@@ -4,6 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/<REPO>/', // Cambia <REPO> por el nombre de tu repositorio
+  base: '/frontendABM/',
   plugins: [react(), tailwindcss()],
 })

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const API_URL = 'http://localhost:3001/items';
+const API_URL = 'https://abm-express.onrender.com/items';
 
 export default function ItemsABM() {
   const [items, setItems] = useState([]);

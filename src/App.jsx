@@ -1,12 +1,18 @@
 import './index.css'; // importa tailwind
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import UsuariosABM from './UsuariosABM';
 import ItemsABM from './ItemsABM';
 import Navbar from './Navbar';
 
 function App() {
   const [view, setView] = useState('usuarios');
-  
+
+  useEffect(() => {
+    fetch("https://abm-express.onrender.com/healthz")
+      .then(() => console.log("Backend activado"))
+      .catch(err => console.error("Error al activar backend", err));
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar view={view} setView={setView} />
