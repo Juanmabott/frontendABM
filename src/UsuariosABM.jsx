@@ -180,7 +180,7 @@ export default function UsuariosABM() {
 
   const fetchItems = async () => {
     try {
-      const r = await fetch('http://localhost:3001/items');
+      const r = await fetch('https://juanmabott.github.io/frontendABM1/items');
       const data = await r.json();
       setAvailableItems(Array.isArray(data) ? data : []);
     } catch {
@@ -410,7 +410,7 @@ export default function UsuariosABM() {
       if (bulkSetProgressItems.length) {
         payload.setProgressItems = bulkSetProgressItems.map(i => ({ item: i.item, progress: parseInt(i.progress, 10) || 0 }));
       }
-      const res = await fetch('http://localhost:3001/users/bulk', {
+      const res = await fetch('https://abm-express.onrender.com/users/bulk', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
