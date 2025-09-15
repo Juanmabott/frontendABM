@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://<USUARIO>.github.io/<REPO>",
+  "homepage": "https://Juanmabott.github.io/frontendABM",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
