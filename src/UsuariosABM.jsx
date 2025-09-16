@@ -180,7 +180,7 @@ export default function UsuariosABM() {
 
   const fetchItems = async () => {
     try {
-      const r = await fetch('https://juanmabott.github.io/frontendABM1/items');
+      const r = await fetch('https://abm-express.onrender.com/items');
       const data = await r.json();
       setAvailableItems(Array.isArray(data) ? data : []);
     } catch {
