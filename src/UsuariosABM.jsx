@@ -76,7 +76,7 @@ function Card({ title, subtitle, right, children }) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
       {(title || right) && (
-        <div className="flex items-center justify-between gap-3 border-b border-gray-200 px-6 py-4">
+        <div className="flex items-center justify-between gap-2 border-b border-gray-200 px-6 py-4">
           <div>
             {title && <h3 className="text-lg font-semibold text-gray-900">{title}</h3>}
             {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
@@ -461,7 +461,7 @@ export default function UsuariosABM() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8">
+    <div className="mx-auto max-w-screen-6xl space-y-2">
       {/* Encabezado */}
       <div className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-white p-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -477,7 +477,7 @@ export default function UsuariosABM() {
       </div>
 
       {/* Acciones rápidas */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card title="Agregar Usuario" subtitle="Crear un registro nuevo">
           <form onSubmit={handleAdd} className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -585,15 +585,38 @@ export default function UsuariosABM() {
           </form>
         </Card>
 
-        <Card title="Buscar & Ordenar" subtitle="Encontrá usuarios rápido">
-          <div className="space-y-4">
+        
+
+        <Card title="Estadísticas" subtitle="Visión rápida" >
+          <dl className="grid grid-cols-2 gap-4 text-sm">
+            <div className="rounded-xl bg-gray-50 p-3">
+              <dt className="text-gray-600">Promedio de puntos</dt>
+              <dd className="mt-1 text-xl font-semibold text-gray-900">
+                {usuarios.length
+                  ? Math.round(
+                      usuarios.reduce((acc, u) => acc + (Number(u.points) || 0), 0) / usuarios.length
+                    )
+                  : 0}
+              </dd>
+            </div>
+            <div className="rounded-xl bg-gray-50 p-3">
+              <dt className="text-gray-600">Top puntos</dt>
+              <dd className="mt-1 text-xl font-semibold text-gray-900">
+                {usuarios.length ? Math.max(...usuarios.map((u) => Number(u.points) || 0)) : 0}
+              </dd>
+            </div>
+          </dl>
+        </Card>
+      </div>
+      <Card title="Buscar & Ordenar" subtitle="Encontrá usuarios rápido">
+          <div className="space-y-2">
             <Input
               label="Búsqueda"
               placeholder="Nombre o puntos…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-4 gap-2">
               <label className="block">
                 <span className="mb-2 block text-sm font-medium text-gray-800">Ordenar por</span>
                 <select
@@ -619,28 +642,6 @@ export default function UsuariosABM() {
             </div>
           </div>
         </Card>
-
-        <Card title="Estadísticas" subtitle="Visión rápida" right={<Badge tone="amber">Demo</Badge>}>
-          <dl className="grid grid-cols-2 gap-4 text-sm">
-            <div className="rounded-xl bg-gray-50 p-3">
-              <dt className="text-gray-600">Promedio de puntos</dt>
-              <dd className="mt-1 text-xl font-semibold text-gray-900">
-                {usuarios.length
-                  ? Math.round(
-                      usuarios.reduce((acc, u) => acc + (Number(u.points) || 0), 0) / usuarios.length
-                    )
-                  : 0}
-              </dd>
-            </div>
-            <div className="rounded-xl bg-gray-50 p-3">
-              <dt className="text-gray-600">Top puntos</dt>
-              <dd className="mt-1 text-xl font-semibold text-gray-900">
-                {usuarios.length ? Math.max(...usuarios.map((u) => Number(u.points) || 0)) : 0}
-              </dd>
-            </div>
-          </dl>
-        </Card>
-      </div>
 
       {/* Lista */}
       <Card title="Lista de Usuarios" subtitle="Editá en línea y gestioná acciones">
