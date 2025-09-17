@@ -10,7 +10,7 @@ function Navbar({ view, setView }) {
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
           <div className="flex items-center">
-            <h2 className="text-white text-xl font-bold">ABM Express</h2>
+            <h2 className="text-white text-xl font-bold">Inquisitorio</h2>
           </div>
           
           {/* Navigation buttons */}

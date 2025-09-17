@@ -477,7 +477,7 @@ export default function UsuariosABM() {
       </div>
 
       {/* Acciones rápidas */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
         <Card title="Agregar Usuario" subtitle="Crear un registro nuevo">
           <form onSubmit={handleAdd} className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -693,7 +693,7 @@ export default function UsuariosABM() {
 
                         {/* Columna Steam (avatar + steamId) */}
                         <td className="whitespace-nowrap px-6 py-4">
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2">
                             <div className="h-10 w-10 rounded-full overflow-hidden bg-gray-200 border border-gray-300">
                               {usuario.steamFoto ? (
                                 usuario.steamId ? (
@@ -729,7 +729,7 @@ export default function UsuariosABM() {
                                 type="text"
                                 value={editSteamId}
                                 onChange={e => setEditSteamId(e.target.value)}
-                                className="w-40 rounded-md border border-gray-300 px-2 py-1 text-xs outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                                className="w-10 rounded-md border border-gray-300 px-1 py-1 text-xs outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                                 placeholder="Steam ID64"
                               />
                             ) : null /* Ocultamos visualización directa del steamId */}
@@ -751,13 +751,13 @@ export default function UsuariosABM() {
                         </td>
 
                         {/* Clase */}
-                        <td className="whitespace-nowrap px-6 py-4">
+                        <td className="whitespace-nowrap px-6 py-4 min-md:w-[190px]">
                           {editId === usuario._id ? (
                             <input
                               type="text"
                               value={editClase}
                               onChange={(e) => setEditClase(e.target.value)}
-                              className="w-full rounded-md border border-gray-300 px-2 py-1 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-sm"
+                              className="w-30 min-w-[10px] rounded-md border border-gray-300 px-2 py-1 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-md"
                               placeholder="Clase"
                             />
                           ) : (
@@ -933,17 +933,8 @@ export default function UsuariosABM() {
                             </div>
                           )}
                         </td>
-                        <td className="whitespace-nowrap px-6 py-4 text-center">
-                          {editId === usuario._id ? (
-                            <div className="flex items-center justify-center gap-2">
-                              <Button onClick={handleUpdate} variant="success" disabled={saving}>
-                                Guardar
-                              </Button>
-                              <Button onClick={cancelEdit} variant="ghost">
-                                Cancelar
-                              </Button>
-                            </div>
-                          ) : (
+                        <td className="whitespace-nowrap px-1 py-2 text-center">
+                          {editId === usuario._id ? null : (
                             <div className="flex items-center justify-center gap-2">
                               <Button onClick={() => handleEdit(usuario)} variant="primary">
                                 Editar
@@ -963,6 +954,18 @@ export default function UsuariosABM() {
           </div>
         )}
       </Card>
+
+      {/* Botones de edición individual fuera del panel, alineados a la derecha */}
+      {editId && (
+        <div className="flex justify-end gap-3 mt-6">
+          <Button onClick={handleUpdate} variant="success" disabled={saving}>
+            Guardar
+          </Button>
+          <Button onClick={cancelEdit} variant="ghost">
+            Cancelar
+          </Button>
+        </div>
+      )}
 
       {/* Modal de confirmación de eliminación */}
       <Modal
@@ -988,57 +991,61 @@ export default function UsuariosABM() {
 
       {/* Edición múltiple */}
       {selectedUserIds.length > 0 && (
-        <Card title={`Edición Múltiple (${selectedUserIds.length})`} subtitle="Aplicar cambios a usuarios seleccionados" right={<Button variant="ghost" onClick={() => setSelectedUserIds([])}>Limpiar selección</Button>}>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <Input label="Delta puntos" placeholder="Ej: 10 o -5" value={bulkDeltaPoints} onChange={e => setBulkDeltaPoints(e.target.value)} />
-              <Input label="Clase" placeholder="Nueva clase" value={bulkClase} onChange={e => setBulkClase(e.target.value)} />
-              <label className="block">
-                <span className="mb-2 block text-sm font-medium text-gray-800">Añadir Item</span>
-                <div className="flex gap-2">
-                  <select className="rounded-lg border border-gray-300 px-3 py-2 text-sm flex-1" value={bulkAppendItem} onChange={e => setBulkAppendItem(e.target.value)}>
-                    <option value="">-- Item --</option>
-                    {availableItems.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
-                  </select>
-                  <input type="number" min={0} className="w-24 rounded-lg border border-gray-300 px-2 py-2 text-sm" value={bulkAppendItemProgress} onChange={e => setBulkAppendItemProgress(e.target.value)} />
-                </div>
-              </label>
+        <>
+          <Card title={`Edición Múltiple (${selectedUserIds.length})`} subtitle="Aplicar cambios a usuarios seleccionados" right={<Button variant="ghost" onClick={() => setSelectedUserIds([])}>Limpiar selección</Button>}>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Input label="Delta puntos" placeholder="Ej: 10 o -5" value={bulkDeltaPoints} onChange={e => setBulkDeltaPoints(e.target.value)} />
+                <Input label="Clase" placeholder="Nueva clase" value={bulkClase} onChange={e => setBulkClase(e.target.value)} />
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-gray-800">Añadir Item</span>
+                  <div className="flex gap-2">
+                    <select className="rounded-lg border border-gray-300 px-3 py-2 text-sm flex-1" value={bulkAppendItem} onChange={e => setBulkAppendItem(e.target.value)}>
+                      <option value="">-- Item --</option>
+                      {availableItems.map(it => <option key={it._id} value={it._id}>{it.name}</option>)}
+                    </select>
+                    <input type="number" min={0} className="w-24 rounded-lg border border-gray-300 px-2 py-2 text-sm" value={bulkAppendItemProgress} onChange={e => setBulkAppendItemProgress(e.target.value)} />
+                  </div>
+                </label>
+              </div>
+              {/* Set progress items (opcional simple) */}
+              <div className="p-3 rounded-xl border border-gray-200 bg-gray-50 space-y-2">
+                <div className="text-xs font-semibold text-gray-700">Setear Progreso Items (opcional)</div>
+                {bulkSetProgressItems.map((it, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-xs">
+                    <select
+                      className="border rounded px-2 py-1"
+                      value={it.item}
+                      onChange={e => setBulkSetProgressItems(arr => arr.map((x,i)=> i===idx?{...x,item:e.target.value}:x))}
+                    >
+                      <option value="">-- Item --</option>
+                      {availableItems.map(ai => <option key={ai._id} value={ai._id}>{ai.name}</option>)}
+                    </select>
+                    <input
+                      type="number"
+                      min={0}
+                      className="w-24 border rounded px-2 py-1"
+                      value={it.progress}
+                      onChange={e => setBulkSetProgressItems(arr => arr.map((x,i)=> i===idx?{...x,progress:e.target.value}:x))}
+                    />
+                    <button
+                      type="button"
+                      className="px-2 py-1 rounded bg-red-500 text-white"
+                      onClick={() => setBulkSetProgressItems(arr => arr.filter((_,i)=> i!==idx))}
+                    >X</button>
+                  </div>
+                ))}
+                <Button type="button" variant="ghost" onClick={() => setBulkSetProgressItems(arr => [...arr,{ item:'', progress:'0'}])}>Añadir fila</Button>
+              </div>
             </div>
-            {/* Set progress items (opcional simple) */}
-            <div className="p-3 rounded-xl border border-gray-200 bg-gray-50 space-y-2">
-              <div className="text-xs font-semibold text-gray-700">Setear Progreso Items (opcional)</div>
-              {bulkSetProgressItems.map((it, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs">
-                  <select
-                    className="border rounded px-2 py-1"
-                    value={it.item}
-                    onChange={e => setBulkSetProgressItems(arr => arr.map((x,i)=> i===idx?{...x,item:e.target.value}:x))}
-                  >
-                    <option value="">-- Item --</option>
-                    {availableItems.map(ai => <option key={ai._id} value={ai._id}>{ai.name}</option>)}
-                  </select>
-                  <input
-                    type="number"
-                    min={0}
-                    className="w-24 border rounded px-2 py-1"
-                    value={it.progress}
-                    onChange={e => setBulkSetProgressItems(arr => arr.map((x,i)=> i===idx?{...x,progress:e.target.value}:x))}
-                  />
-                  <button
-                    type="button"
-                    className="px-2 py-1 rounded bg-red-500 text-white"
-                    onClick={() => setBulkSetProgressItems(arr => arr.filter((_,i)=> i!==idx))}
-                  >X</button>
-                </div>
-              ))}
-              <Button type="button" variant="ghost" onClick={() => setBulkSetProgressItems(arr => [...arr,{ item:'', progress:'0'}])}>Añadir fila</Button>
-            </div>
-            <div className="flex gap-3">
-              <Button type="button" onClick={handleBulkApply} disabled={saving || !selectedUserIds.length}>Aplicar</Button>
-              <Button type="button" variant="ghost" onClick={() => { setBulkDeltaPoints(''); setBulkClase(''); setBulkAppendItem(''); setBulkAppendItemProgress('0'); setBulkSetProgressItems([]); }}>Reset</Button>
-            </div>
+          </Card>
+          <div className="flex justify-end gap-3 mt-6">
+            <Button type="button" onClick={handleBulkApply} disabled={saving || !selectedUserIds.length} variant="success">Guardaasr</Button>
+            <Button type="button" variant="ghost" onClick={() => { setBulkDeltaPoints(''); setBulkClase(''); setBulkAppendItem(''); setBulkAppendItemProgress('0'); setBulkSetProgressItems([]); }}>
+              Cancelar
+            </Button>
           </div>
-        </Card>
+        </>
       )}
     </div>
   )
